@@ -17,7 +17,7 @@ my_tweet = Tweet().fromTweepy('TWEET ID', api)
 my_lineage = Lineage(my_tweet, api)
 
 #### Create and fill out Conversation
-my_conversation = Conversation(my_lineage)
+my_conversation = Conversation(my_lineage, api)
 
 #### Create nested dictionary of conversation
 d = {}  
