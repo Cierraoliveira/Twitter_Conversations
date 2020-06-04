@@ -1,5 +1,5 @@
 # Twitter_Conversations
-Scraps Tweets and fills out conversation trees
+Scrapes Tweets and fills out conversation trees
 
 ## Authentication 
 consumer_key = XXXXXX  
