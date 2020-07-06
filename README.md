@@ -24,9 +24,9 @@ d = {}
 d = writeDict(tweetDict=d, conv=my_conversation)
 
 #### Option to use backup query method that returns a tweet
-my_tweet = Tweet().tweet_by_id('TWEET_ID', api, backup_query)
-my_lineage = Lineage(my_tweet, api, backup_query)
-my_conversation = Conversation(my_lineage, api, backup_query)
+my_tweet = Tweet().tweet_by_id('TWEET_ID', api, backup_query)  
+my_lineage = Lineage(my_tweet, api, backup_query)  
+my_conversation = Conversation(my_lineage, api, backup_query)  
 
 #### Limitations
 - fillTree function of Conversation class cannot grab tweets stemming from deleted quote tweets
