@@ -29,7 +29,7 @@ my_lineage = Lineage(my_tweet, api, backup_query)
 my_conversation = Conversation(my_lineage, api, backup_query)
 
 #### Limitations
-- fillTree function of Conversation cannot grab tweets stemming from deleted quote tweets
-- fillTree function of Conversation cannot detect deleted tweets when traversing down a conversation
+- fillTree function of Conversation class cannot grab tweets stemming from deleted quote tweets
+- fillTree function of Conversation class cannot detect deleted tweets when traversing down a conversation
 - deleted tweets are only detected when traversing up a lineage, using the traverse function in the Lineage class
 
