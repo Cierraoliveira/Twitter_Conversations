@@ -8,7 +8,7 @@ access_key = XXXXXX
 access_secret = XXXXXX  
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)  
 auth.set_access_token(access_key, access_secret)  
-api = tweepy.API(auth)  
+api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)  
 
 #### Create Tweet Object using the Tweet ID
 my_tweet = Tweet().tweet_by_id('TWEET_ID', api)
