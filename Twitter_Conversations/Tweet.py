@@ -9,19 +9,40 @@ import json
 class Tweet:
 
     # constructor(s):
-    def __init__(self, tweet_id=None, tweet_text=None, username=None, reply_id=None, date=None, retweets=None):
+    def __init__(self, tweet_id=None, tweet_text=None, username=None, reply_id=None,
+                 date=None, retweets=None, tweet_type=None):
         self.tweet_id = tweet_id  # individ id
         self.tweet_text = tweet_text
         self.username = username
         self.reply_id = reply_id  # in_reply_to_status ID
         self.date = date
         self.retweets = retweets  # num of retweets
-        self.tweet_type = None  # reply, root, quote
+        self.tweet_type = tweet_type  # reply, root, quote
         self.children = []  # list of children tweets
 
-    # class method to create Tweet object from tweepy tweet
+    # class method to search for tweet by id
     @classmethod
-    def fromTweepy(cls, tweetID: str, api: tweepy):
+    def tweet_by_id(cls, tweetID: str, api: tweepy, backup_query=None):
+
+        # try fromTweepy
+        tweet = cls.fromTweepy(tweetID, api)
+        if tweet:
+            return tweet
+
+        # try backup_query
+        elif backup_query:
+            tweet = backup_query(tweetID)
+            if tweet:
+                return tweet
+            else:
+                return None
+
+        else:
+            return None
+
+    # method to create Tweet object from tweepy tweet
+    @staticmethod
+    def fromTweepy(tweetID: str, api: tweepy):
 
         # look up tweet from tweepy using tweet ID
         tweepyTweets = api.statuses_lookup([tweetID])
@@ -41,7 +62,7 @@ class Tweet:
             tweet.retweets = tweepyTweet.retweet_count
 
             # tweet type
-            if hasattr(tweepyTweet, 'quoted_status_id'):  # if the tweet is a quote
+            if hasattr(tweepyTweet, 'quoted_status_id'):
                 tweet.tweet_type = 'quote'
                 tweet.quoted_id = tweepyTweet.quoted_status_id_str
             elif tweepyTweet.in_reply_to_status_id_str:
@@ -50,12 +71,14 @@ class Tweet:
                 tweet.tweet_type = 'root'
             return tweet
 
+
     # to overload print function
     def __str__(self):
-        return "Tweet ID: {0}\nText: {1}\nUsername: {2}\nin_reply_to_status ID: {3}".format(self.tweet_id,
-                                                                                            self.tweet_text,
-                                                                                            self.username,
-                                                                                            self.reply_id)
+        return "Tweet ID: {0}\nText: {1}\nUsername: " \
+               "{2}\nin_reply_to_status ID: {3}".format(self.tweet_id,
+                                                        self.tweet_text,
+                                                        self.username,
+                                                        self.reply_id)
 
     # overloaded equality operator
     def __eq__(self, other):
