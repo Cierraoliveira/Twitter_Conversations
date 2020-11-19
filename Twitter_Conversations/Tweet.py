@@ -10,7 +10,8 @@ class Tweet:
 
     # constructor(s):
     def __init__(self, tweet_id=None, tweet_text=None, username=None, reply_id=None,
-                 date=None, retweets=None, tweet_type=None):
+                 date=None, retweets=None, tweet_type=None, quoted_id=None,
+                 referenced_tweet_id=None, conversation_id=None):
         self.tweet_id = tweet_id  # individ id
         self.tweet_text = tweet_text
         self.username = username
@@ -18,6 +19,9 @@ class Tweet:
         self.date = date
         self.retweets = retweets  # num of retweets
         self.tweet_type = tweet_type  # reply, root, quote
+        self.quoted_id = quoted_id # id of quoted tweet
+        self.referenced_tweet_id = referenced_tweet_id # id of referenced tweet, introduced in API v2
+        self.conversation_id = conversation_id
         self.children = []  # list of children tweets
 
     # class method to search for tweet by id
@@ -75,10 +79,11 @@ class Tweet:
     # to overload print function
     def __str__(self):
         return "Tweet ID: {0}\nText: {1}\nUsername: " \
-               "{2}\nin_reply_to_status ID: {3}".format(self.tweet_id,
+               "{2}\nin_reply_to_status ID: {3}\ntweet_type: {4}".format(self.tweet_id,
                                                         self.tweet_text,
                                                         self.username,
-                                                        self.reply_id)
+                                                        self.reply_id,
+                                                        self.tweet_type)
 
     # overloaded equality operator
     def __eq__(self, other):
